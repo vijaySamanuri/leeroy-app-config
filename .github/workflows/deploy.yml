@@ -1,0 +1,34 @@
+# Build workflow gets auto triggered upon code merge to master or release* branches
+
+name: Deploy
+
+on:
+  push:
+     branches: 
+     - dev
+     - stage
+     - prod
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download Latest Hyscale Binary
+      run: |
+          docker login --username=$DOCKER_USERNAME  --password=$DOCKER_PASSWORD
+          mkdir -p ~/.kube
+          echo $KUBECONFIG > ~/.kube/config
+          curl -sSL https://get.hyscale.io |  bash
+      env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+          DOCKER_USERNAME: ${{ secrets.HYS_DEV_DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.HYS_DEV_DOCKER_PASSWORD }}
+
+    - name: Deploy
+      run: |
+              hyscale deploy service -f leeroy-app.hspec.yaml -p profiles/${GITHUB_REF}-leeroy-app.hprof.yaml -n leeroy-${GITHUB_REF} -a leeroy
+              docker logout
+
