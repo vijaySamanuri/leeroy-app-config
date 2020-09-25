@@ -1,14 +1,7 @@
 environment: dev
 overrides: leeroy-app
 
-name: leeroy-app
-image:
-  
-   registry: registry.hub.docker.com 
-   name: vijaysamanuri/leeroy-app
-   tag: 1.0
-   dockerfile: {}
-
+memory: 50m-256m
 ports:
   - port: 50051/tcp
     healthCheck:

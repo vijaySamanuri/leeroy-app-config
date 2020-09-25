@@ -3,11 +3,9 @@ image:
   
    registry: registry.hub.docker.com 
    name: vijaysamanuri/leeroy-app
-   tag: 1.0
-   dockerfile: {}
+   tag: {{ image_tag }} 
 
 ports:
   - port: 50051/tcp
     healthCheck:
       httpPath: /
-
