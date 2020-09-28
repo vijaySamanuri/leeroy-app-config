@@ -29,6 +29,7 @@ jobs:
 
     - name: Deploy
       run: |
-              hyscale deploy service -f leeroy-app.hspec.yaml -p profiles/${GITHUB_REF}-leeroy-app.hprof.yaml -n leeroy-${GITHUB_REF} -a leeroy
+              env="${GITHUB_REF##*/}"
+              hyscale deploy service -f leeroy-app.hspec.yaml -p profiles/${env}-leeroy-app.hprof.yaml -n leeroy-${env} -a leeroy
               docker logout
 
