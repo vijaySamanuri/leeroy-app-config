@@ -3,7 +3,7 @@ image:
   
    registry: registry.hub.docker.com 
    name: vijaysamanuri/leeroy-app
-   tag: {{ image_tag }} 
+   tag: v1.1.4 
 
 ports:
   - port: 50051/tcp
